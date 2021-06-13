@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.uxfinalproject.wrcomic.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_nav_comic"
+            app:destination="@id/nav_comic" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_about"
+            app:destination="@id/nav_about" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_comic"
+        android:name="com.uxfinalproject.wrcomic.ui.comics.ComicFragment"
+        android:label="Comic"
+        tools:layout="@layout/fragment_comic">
+        <action
+            android:id="@+id/action_nav_comic_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_comic_to_nav_about"
+            app:destination="@id/nav_about" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.uxfinalproject.wrcomic.ui.aboutus.AboutusFragment"
+        android:label="Comic"
+        tools:layout="@layout/fragment_aboutus">
+        <action
+            android:id="@+id/action_nav_about_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_about_to_nav_comic"
+            app:destination="@id/nav_comic" />
+
+    </fragment>
+
+
+
+</navigation>

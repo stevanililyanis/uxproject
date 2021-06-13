@@ -18,7 +18,7 @@
             tools:ignore="MissingConstraints"></ImageView>
     </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tf_username"
+
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_width="match_parent"
@@ -29,11 +29,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tf_username"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tf_password"
+
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="10dp"
@@ -45,9 +46,20 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/tf_password"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/error_txt"
+        android:textColor="#e80000"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"></TextView>
+
     <com.google.android.material.button.MaterialButton
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
@@ -57,5 +69,6 @@
         android:id="@+id/btnLogin">
 
     </com.google.android.material.button.MaterialButton>
+
 
 </LinearLayout>

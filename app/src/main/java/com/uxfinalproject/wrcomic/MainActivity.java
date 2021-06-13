@@ -1,9 +1,12 @@
 package com.uxfinalproject.wrcomic;
 
+import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -12,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +24,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.uxfinalproject.wrcomic.databinding.ActivityMainBinding;
 import com.uxfinalproject.wrcomic.ui.comics.ComicFragment;
@@ -29,8 +35,8 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
-    DrawerLayout drawer;
-    NavigationView navigationView;
+    private TextView logout, nama;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,81 +45,42 @@ public class MainActivity extends AppCompatActivity  {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //binding = ActivityMainBinding.inflate(getLayoutInflater());
-      //  setContentView(binding.getRoot());
 
-      //  setSupportActionBar(binding.appBarMain.toolbar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.nav_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main,
-                                new HomeFragment()).commit();
-                        navigationView.setCheckedItem(R.id.nav_home);
-                        break;
-                    case R.id.nav_comic:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main,
-                                new ComicFragment()).commit();
-                        navigationView.setCheckedItem(R.id.nav_comic);
-                        break;
-                }
-                System.out.println("clicked: "+menuItem.getItemId());
-                System.out.println("comic: "+R.id.nav_comic);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-      /*  mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_comic, R.id.nav_gallery, R.id.nav_slideshow)
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_comic, R.id.nav_about)
                 .setDrawerLayout(drawer)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-*/
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main,
-                    new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
+
+        String name = getIntent().getStringExtra("nama");
+
+        View header = navigationView.getHeaderView(0);
+        nama = header.findViewById(R.id.nama);
+        nama.setText(name + " !");
+
+        logout=findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+
 
     }
-/*
-    @Override
-    public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()){
-            case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HomeFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_home);
-                break;
-            case R.id.nav_comic:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ComicFragment()).commit();
-                navigationView.setCheckedItem(R.id.nav_comic);
-                break;
-        }
-        System.out.println("clicked: "+menuItem.getItemId());
-        System.out.println("comic: "+R.id.nav_comic);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
-/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
@@ -123,18 +90,12 @@ public class MainActivity extends AppCompatActivity  {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-*/
 
-
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment_content_main, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
 

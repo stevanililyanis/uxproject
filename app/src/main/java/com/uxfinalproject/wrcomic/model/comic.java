@@ -1,6 +1,8 @@
 package com.uxfinalproject.wrcomic.model;
 
-public class comic {
+import java.io.Serializable;
+
+public class comic implements Serializable {
     private String comic_name, desc_comic;
     private Integer comic_image;
 
